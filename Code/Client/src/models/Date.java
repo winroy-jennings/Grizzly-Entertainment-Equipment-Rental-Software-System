@@ -1,6 +1,6 @@
 package models;
 
-public class Date extends Equipment{
+public class Date{
 	//Date attributes 
 	int day;
 	int month;
