@@ -1,22 +1,24 @@
-public class date extends Equipment{
+package models;
+
+public class Date extends Equipment{
 	//Date attributes 
 	int day;
 	int month;
 	int year;
 	
-	public date()
+	public Date()
 	{
 		day = 12;
 		month = 12;
 		year = 2023;
 	}
-	public date(int day, int month, int year)
+	public Date(int day, int month, int year)
 	{
 		this.day = day;
 		this.month = month;
 		this.year = year;
 	}
-	public date(date Date)
+	public Date(Date Date)
 	{
 		this.day = Date.day;
 		this.month = Date.month;

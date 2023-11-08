@@ -1,7 +1,8 @@
+package models;
 public class Equipment {
 	//Equipment Attributes
 	String category;
-	date dateAvailable
+	Date dateAvailable;
 	double cost;
 	int Id;
 	String equipmentType;
@@ -10,18 +11,18 @@ public class Equipment {
 	public Equipment()
 	{
 		category = "";
-		date = new dateAvailable();
+		dateAvailable = new Date();
 		cost = 0.0;
 		Id = 00;
 		equipmentType = "";
 		rentalStatus = "";
 	}
-	public Equipment(String category, date dateAvailabale, double cost, int Id, String equipmentType, String rentalStatus)
+	public Equipment(String category, Date dateAvailabale, double cost, int Id, String equipmentType, String rentalStatus)
 	{
 		this.category = category;
-		this.date = dateAvailabale;
+		this.dateAvailable = dateAvailabale;
 		this.cost = cost;
-		this.Id = tId;
+		this.Id = Id;
 		this.equipmentType = equipmentType;
 		this.rentalStatus = rentalStatus;
 	}
@@ -31,11 +32,11 @@ public class Equipment {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public date getDate() {
+	public Date getDate() {
 		return dateAvailable;
 	}
-	public void setDate(date dateAvailable) {
-		this.date = dateAvailable;
+	public void setDate(Date dateAvailable) {
+		this.dateAvailable = dateAvailable;
 	}
 	public double getcost() {
 		return cost;
