@@ -1,4 +1,4 @@
-package approject;
+package models;
 
 public class Message {
 	private String id;
@@ -21,6 +21,14 @@ public class Message {
 		this.sender = " ";
 		this.reciever = " ";
 		
+		
+	}
+	
+	public Message (Message mess) {
+		this.id = mess.id;
+		this.message = mess.message;
+		this.sender = mess.sender;
+		this.reciever = mess.reciever;
 		
 	}
 

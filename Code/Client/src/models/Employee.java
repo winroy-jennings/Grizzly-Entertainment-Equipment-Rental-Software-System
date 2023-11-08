@@ -1,12 +1,20 @@
-package approject;
+package models;
 
 public class Employee {
 	private String employeePosition;
 	
-	public Employee(String message) {
+	public Employee() {
 		this.employeePosition = "";
 
 		}
+	public Employee (String employeePosition) {
+		this.employeePosition = employeePosition;
+	}
+	
+	public Employee (Employee emp) {
+		this.employeePosition = emp.employeePosition;
+		
+	}
 	
 	public String getemployeePosition() {
 		return employeePosition;
