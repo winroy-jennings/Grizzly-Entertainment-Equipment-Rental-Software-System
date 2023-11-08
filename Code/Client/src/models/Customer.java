@@ -1,7 +1,5 @@
 package models;
 
-import models.User;
-
 public class Customer extends User {
 	private double amountBalance;
 
