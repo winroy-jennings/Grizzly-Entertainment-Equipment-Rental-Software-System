@@ -1,8 +1,6 @@
 package models;
 
-import models.User;
-
-public class Customer {
+public class Customer extends User {
 	private double amountBalance;
 
 	// Default constructor

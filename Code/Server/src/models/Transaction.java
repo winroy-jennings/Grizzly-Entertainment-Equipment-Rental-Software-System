@@ -1,7 +1,5 @@
 package models;
 
-import models.Date;
-
 public class Transaction {
 	private int id;
 	private Date startDate;
