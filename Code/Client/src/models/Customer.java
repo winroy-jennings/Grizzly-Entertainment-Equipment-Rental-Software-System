@@ -4,7 +4,7 @@ public class Customer extends User {
 	private double amountBalance;
 
 	// Default constructor
-	public Customer() {
+	public Customer(String customerID, String name, String contact, String password, double accountBalance) {
 		super();
 		this.amountBalance = 0.0;
 	}
