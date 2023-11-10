@@ -1,0 +1,6 @@
+[INFO ] 2023-11-03 17:12:27.851 [main] Driver - Test Info message
+[DEBUG] 2023-11-03 17:12:27.854 [main] Driver - Test Debug Message
+[ERROR] 2023-11-03 17:12:27.856 [main] Driver - Test Error message
+[TRACE] 2023-11-03 17:12:27.856 [main] Driver - Test Trace message
+[FATAL] 2023-11-03 17:12:27.857 [main] Driver - Test Fatal message
+[WARN ] 2023-11-03 17:12:27.857 [main] Driver - Test Warning message
