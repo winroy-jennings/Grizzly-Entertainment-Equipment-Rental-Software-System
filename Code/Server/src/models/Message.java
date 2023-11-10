@@ -5,14 +5,16 @@ public class Message {
 	private String message;
 	private String sender;
 	private String reciever;
+	private String date;
 	
 	
-	public Message(String id, String message, String sender, String reciever) {
+	public Message(String id, String message, String sender, String reciever,String date) {
 		super();
 		this.id = id;
 		this.message = message;
 		this.sender = sender;
 		this.reciever = reciever;
+		this.date = date;
 	}
 	
 	public Message () {
@@ -20,6 +22,7 @@ public class Message {
 		this.message = " ";
 		this.sender = " ";
 		this.reciever = " ";
+		this.date = " "; 
 		
 		
 	}
@@ -29,6 +32,7 @@ public class Message {
 		this.message = mess.message;
 		this.sender = mess.sender;
 		this.reciever = mess.reciever;
+		this.date = mess.date;
 		
 	}
 
@@ -64,6 +68,14 @@ public class Message {
 		this.reciever = reciever;
 	}
 
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getDate() {
+		return date;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", message=" + message + ", sender=" + sender + ", reciever=" + reciever + "]";
@@ -74,6 +86,8 @@ public class Message {
         System.out.println("Sender: " + sender);
         System.out.println("Receiver: " + reciever);
         System.out.println("Message: " + message);
+        System.out.println("Date: " + date);
+        
     }
 	
 	
