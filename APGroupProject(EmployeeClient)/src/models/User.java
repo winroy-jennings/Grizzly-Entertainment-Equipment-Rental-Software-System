@@ -12,6 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class User implements Serializable{
+	private static final long serialVersionUID = -7581521551207507072L;
+	
 	protected int id;
 	protected String username;
 	protected String password;

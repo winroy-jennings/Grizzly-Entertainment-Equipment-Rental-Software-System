@@ -13,15 +13,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.transaction.Transaction;
 
 import models.Customer;
 import models.Employee;
 import models.Equipment;
 import models.Message;
 import models.RentalRequest;
+import models.Transaction;
 
 public class Client {
 	private Socket connectionSocket;
@@ -259,6 +260,100 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+	}
+	
+	// Winroy Jennings
+	public void viewAllMessages(int userID) {
+		try {
+			objOs.writeObject(userID);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<Message> retrieveAllMessages() {
+		List<Message> result = null;
+
+		try {
+			result = (List<Message>) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public void sendCustomerID(int customerID) {
+		try {
+			objOs.writeObject(customerID);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean validateCustomerID() {
+		boolean result = false;
+
+		try {
+			result = (boolean) objIs.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public void sendEmployeeID(int employeeID) {
+		try {
+			objOs.writeObject(employeeID);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean validateEmployeeID() {
+		boolean result = false;
+
+		try {
+			result = (boolean) objIs.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public void sendEquipmentID(int equipmentID) {
+		try {
+			objOs.writeObject(equipmentID);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean validateEquipmentID() {
+		boolean result = false;
+
+		try {
+			result = (boolean) objIs.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public boolean rentalRequestStatus() {
+		boolean result = false;
+
+		try {
+			result = (boolean) objIs.readObject();
+			System.out.println("CLIENT: " + result);
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 }

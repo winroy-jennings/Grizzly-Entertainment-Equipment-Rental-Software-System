@@ -12,6 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class Equipment implements Serializable{
+	private static final long serialVersionUID = -4522619763048701759L;
+	
 	private String category;
 	private Date dateAvailable;
 	private double cost;

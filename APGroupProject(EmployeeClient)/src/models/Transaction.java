@@ -12,6 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class Transaction implements Serializable{
+	private static final long serialVersionUID = 3175884179822888467L;
+	
 	private int id;
 	private Date startDate;
 	private Date endDate;

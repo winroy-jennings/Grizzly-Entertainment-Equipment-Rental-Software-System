@@ -12,11 +12,14 @@ package models;
 import java.io.Serializable;
 
 public class RentalRequest implements Serializable{
+	private static final long serialVersionUID = -4417130958110752942L;
+	
 	private int id;
 	private Date requestStartDate;
 	private Date requestEndDate;
 	private User customer;
 	private User employee;
+	private Equipment equipment;
 	
 	public RentalRequest(){
 		id = 0;
@@ -80,6 +83,14 @@ public class RentalRequest implements Serializable{
 
 	public void setEmployee(User employee) {
 		this.employee = employee;
+	}
+
+	public Equipment getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
 	}
 
 	@Override

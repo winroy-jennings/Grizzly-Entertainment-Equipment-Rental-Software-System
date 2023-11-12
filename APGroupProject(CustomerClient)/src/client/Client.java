@@ -13,15 +13,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.transaction.Transaction;
 
 import models.Customer;
 import models.Employee;
 import models.Equipment;
 import models.Message;
 import models.RentalRequest;
+import models.Transaction;
 
 public class Client {
 	private Socket connectionSocket;
@@ -260,5 +261,85 @@ public class Client {
             e.printStackTrace();
         }
 	}
+	
+	// Winroy Jennings
+	// For View Available Equipment
+	public void viewAllAvailableEquipmentsResponse(String category) {
+		try {
+			objOs.writeObject(category);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	public List<Equipment> retrieveAllAvailableEquipmentsResponse() {
+		List<Equipment> result = null;
+
+		try {
+			result = (List<Equipment>) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	// For Rent Available Equipment
+	public void sendEquipmentId(String equipmentID) {
+		try {
+			objOs.writeObject(equipmentID);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean receiveEquipmentValidation() {
+		boolean result = false;
+
+		try {
+			result = (Boolean) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	// Feedback - Change Equipment from available to rented status
+	public boolean receiveEquipmentUpdate() {
+		boolean result = false;
+
+		try {
+			result = (Boolean) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public double receiveEquipmentCost() {
+		double result = 0.0;
+
+		try {
+			result = (double) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	// Transaction Section
+	public boolean receiveTransactionStatus() {
+		boolean result = false;
+
+		try {
+			result = (Boolean) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 }

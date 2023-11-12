@@ -12,6 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class Message implements Serializable{
+	private static final long serialVersionUID = -3149594265881572254L;
+	
 	private int id;
 	private int customerId;
 	private int employeeId;

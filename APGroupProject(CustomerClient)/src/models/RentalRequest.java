@@ -12,6 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class RentalRequest implements Serializable{
+	private static final long serialVersionUID = -4417130958110752942L;
+	
 	private int id;
 	private Date requestStartDate;
 	private Date requestEndDate;

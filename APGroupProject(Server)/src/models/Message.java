@@ -11,7 +11,9 @@ package models;
 
 import java.io.Serializable;
 
-public class Message implements Serializable{
+public class Message implements Serializable {
+	private static final long serialVersionUID = -3149594265881572254L;
+	
 	private int id;
 	private int customerId;
 	private int employeeId;
@@ -24,16 +26,16 @@ public class Message implements Serializable{
 		customerId = 0;
 		message = "";
 	}
-	
-	
-	public Message(int customerId, int equipmentId, String message) {
-		this.message = message;
+
+	public Message(int id, int customerId, int employeeId, int equipmentId, String message) {
+		this.id = id;
 		this.customerId = customerId;
+		this.employeeId = employeeId;
 		this.equipmentId = equipmentId;
+		this.message = message;
 	}
-	
-	
-	public Message (Message m) {
+
+	public Message(Message m) {
 		this.id = m.id;
 		this.message = m.message;
 		this.customerId = m.customerId;
@@ -68,11 +70,9 @@ public class Message implements Serializable{
 		return employeeId;
 	}
 
-
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-
 
 	public String getMessage() {
 		return message;

@@ -11,24 +11,27 @@ package models;
 
 import java.io.Serializable;
 
-public class Equipment implements Serializable{
+public class Equipment implements Serializable {
+	private static final long serialVersionUID = -4522619763048701759L;
+	
 	private String category;
 	private Date dateAvailable;
 	private double cost;
 	private int id;
 	private String equipmentType;
-	private boolean rentalStatus;
-	
-	public Equipment(){
+	private int rentalStatus;
+
+	public Equipment() {
 		category = "";
 		dateAvailable = new Date();
 		cost = 0.0;
 		id = 0;
 		equipmentType = "";
-		rentalStatus = false;
+		rentalStatus = 0;
 	}
-	
-	public Equipment(String category, Date dateAvailabale, double cost, int id, String equipmentType, boolean rentalStatus){
+
+	public Equipment(String category, Date dateAvailabale, double cost, int id, String equipmentType,
+			int rentalStatus) {
 		this.category = category;
 		this.dateAvailable = dateAvailabale;
 		this.cost = cost;
@@ -36,8 +39,8 @@ public class Equipment implements Serializable{
 		this.equipmentType = equipmentType;
 		this.rentalStatus = rentalStatus;
 	}
-	
-	public Equipment(Equipment equipment){
+
+	public Equipment(Equipment equipment) {
 		this.category = equipment.category;
 		this.dateAvailable = equipment.dateAvailable;
 		this.cost = equipment.cost;
@@ -86,11 +89,11 @@ public class Equipment implements Serializable{
 		this.equipmentType = equipmentType;
 	}
 
-	public boolean getRentalStatus() {
+	public int getRentalStatus() {
 		return rentalStatus;
 	}
 
-	public void setRentalStatus(boolean rentalStatus) {
+	public void setRentalStatus(int rentalStatus) {
 		this.rentalStatus = rentalStatus;
 	}
 
@@ -99,7 +102,7 @@ public class Equipment implements Serializable{
 		return "Category: " + category + "\nDate Available: " + dateAvailable + "\nCost: " + cost + "\nID: " + id
 				+ "\nType: " + equipmentType + "\nRental Status: " + rentalStatus;
 	}
-	
+
 	public void display() {
 		System.out.println(toString());
 	}

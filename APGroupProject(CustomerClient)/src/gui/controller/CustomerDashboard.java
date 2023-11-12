@@ -43,29 +43,32 @@ public class CustomerDashboard extends JFrame {
 		setTitle("Customer Dashboard");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 490, 356);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setToolTipText("Options");
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnCustomerDashboard = new JMenu("Click to view customer dashboard options");
 		menuBar.add(mnCustomerDashboard);
-		
-		JMenuItem viewRentAvailableEquipmentMenuItem = new JMenuItem("View/Rent Available Equipment");
-		mnCustomerDashboard.add(viewRentAvailableEquipmentMenuItem);
-		
+
+		JMenuItem viewAvailableEquipmentMenuItem = new JMenuItem("View Available Equipment");
+		mnCustomerDashboard.add(viewAvailableEquipmentMenuItem);
+
+		JMenuItem rentAvailableEquipmentMenuItem = new JMenuItem("Rent Available Equipment");
+		mnCustomerDashboard.add(rentAvailableEquipmentMenuItem);
+
 		JMenuItem viewSingleTransactionMenuItem = new JMenuItem("View Single Transaction");
 		mnCustomerDashboard.add(viewSingleTransactionMenuItem);
-		
+
 		JMenuItem viewAllTransactionsMenuItem = new JMenuItem("View All Transactions");
 		mnCustomerDashboard.add(viewAllTransactionsMenuItem);
-		
+
 		JMenuItem viewNewMessagesMenuItem = new JMenuItem("View New Messages");
 		mnCustomerDashboard.add(viewNewMessagesMenuItem);
-		
+
 		JMenuItem leaveAMessageMenuItem = new JMenuItem("Leave A Message");
 		mnCustomerDashboard.add(leaveAMessageMenuItem);
-		
+
 		JMenuItem logOutMenuItem = new JMenuItem("Log Out");
 		mnCustomerDashboard.add(logOutMenuItem);
 		customerDashboardContentPane = new JPanel();
@@ -73,23 +76,37 @@ public class CustomerDashboard extends JFrame {
 		customerDashboardContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(customerDashboardContentPane);
-		
+
 		logOutMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new WelcomeMenu().setVisible(true);
 				dispose();
 			}
-			
+
 		});
-		
+
 		leaveAMessageMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CustomerSendMessage().setVisible(true);
 				dispose();
 			}
-			
+
+		});
+
+		viewAvailableEquipmentMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ViewAvailableEquipment();
+			}
+		});
+
+		rentAvailableEquipmentMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new RentAvailableEquipment();
+			}
 		});
 	}
 

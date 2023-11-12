@@ -12,6 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class Date implements Serializable{
+	private static final long serialVersionUID = -2753205379673137567L;
+	
 	private int day;
 	private int month;
 	private int year;

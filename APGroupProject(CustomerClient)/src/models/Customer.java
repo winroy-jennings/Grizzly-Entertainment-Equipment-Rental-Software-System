@@ -12,7 +12,8 @@ package models;
 import java.io.Serializable;
 
 public class Customer extends User implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7954004123334808792L;
+	
 	private double amountBalance;
 
 	public Customer() {

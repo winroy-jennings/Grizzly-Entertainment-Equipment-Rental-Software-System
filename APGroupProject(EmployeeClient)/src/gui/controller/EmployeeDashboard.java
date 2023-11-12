@@ -91,6 +91,20 @@ public class EmployeeDashboard extends JFrame {
 			}
 			
 		});
+		
+		viewNewMessagesMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ViewAllMessages();
+			}
+		});
+		
+		scheduleEquipmentMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ScheduleEquipment();
+			}
+		});
 	}
 
 }

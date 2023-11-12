@@ -11,7 +11,9 @@ package models;
 
 import java.io.Serializable;
 
-public class Equipment implements Serializable{
+public class Equipment implements Serializable {
+	private static final long serialVersionUID = -4522619763048701759L;
+	
 	private String category;
 	private Date dateAvailable;
 	private double cost;
@@ -19,7 +21,7 @@ public class Equipment implements Serializable{
 	private String equipmentType;
 	private boolean rentalStatus;
 	
-	public Equipment(){
+	public Equipment() {
 		category = "";
 		dateAvailable = new Date();
 		cost = 0.0;
@@ -27,17 +29,18 @@ public class Equipment implements Serializable{
 		equipmentType = "";
 		rentalStatus = false;
 	}
-	
-	public Equipment(String category, Date dateAvailabale, double cost, int id, String equipmentType, boolean rentalStatus){
-		this.category = category;
-		this.dateAvailable = dateAvailabale;
-		this.cost = cost;
+
+	public Equipment(int id, String category, Date dateAvailable, double cost, String equipmentType,
+			boolean rentalStatus) {
 		this.id = id;
+		this.category = category;
+		this.dateAvailable = dateAvailable;
+		this.cost = cost;
 		this.equipmentType = equipmentType;
 		this.rentalStatus = rentalStatus;
 	}
-	
-	public Equipment(Equipment equipment){
+
+	public Equipment(Equipment equipment) {
 		this.category = equipment.category;
 		this.dateAvailable = equipment.dateAvailable;
 		this.cost = equipment.cost;
@@ -99,7 +102,7 @@ public class Equipment implements Serializable{
 		return "Category: " + category + "\nDate Available: " + dateAvailable + "\nCost: " + cost + "\nID: " + id
 				+ "\nType: " + equipmentType + "\nRental Status: " + rentalStatus;
 	}
-	
+
 	public void display() {
 		System.out.println(toString());
 	}
