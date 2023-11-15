@@ -138,6 +138,35 @@ public class Client {
 		}
 	}
 	
+	public void sendInvoice (String equipmentId, String customerId) {
+		try {
+			objOs.writeObject(equipmentId);
+			objOs.writeObject(customerId);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public boolean receiptReceived() {
+		boolean receipt = false;
+		try {
+			receipt=objIs.readBoolean();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return receipt;
+	}
+	
+	public boolean invoiceReceived() {
+		boolean inv = false;
+		try {
+			inv=objIs.readBoolean();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return inv;
+	}
 	public void sendCustomer(Customer customerObj) {
 		try {
 			objOs.writeObject(customerObj);
