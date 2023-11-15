@@ -1,13 +1,17 @@
-//Author: Aneska Bryan
+//Author: Aneska Bryan //
 
 
 package gui.controller;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.LogManager;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -35,6 +39,7 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 	private GridBagConstraints gbc;
 	private Client client;
 
+	private static final Logger logger = LogManager.getLogger(CreateInvoice.class);
 
 	public CreateInvoice() {
 		super("Create Invoice", true, true, true, true);
@@ -134,19 +139,20 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 
 										if (invoiceStatus) {
 											JOptionPane.showMessageDialog(this, "Invoice created successfully!",
-													"Request Status", JOptionPane.INFORMATION_MESSAGE);
+													"Invoice Status", JOptionPane.INFORMATION_MESSAGE);
 										} else {
 											JOptionPane.showMessageDialog(this,
 													"Error occured while processing invoice", "Invoice Status",
 													JOptionPane.ERROR_MESSAGE);
+													logger.error("Error occured while processing invoice");
 										}
 									} else {
 										JOptionPane.showMessageDialog(this, "Invalid equipment ID, try again",
-												"Request Status", JOptionPane.ERROR_MESSAGE);
+												"Invoice Status", JOptionPane.ERROR_MESSAGE);
 									}
 								} else {
 									JOptionPane.showMessageDialog(this, "Invalid employee ID, try again",
-											"Request Status", JOptionPane.ERROR_MESSAGE);
+											"Invoice Status", JOptionPane.ERROR_MESSAGE);
 								}
 							} else {
 								JOptionPane.showMessageDialog(this, "Invalid customer ID, try again", "Invoice Status",

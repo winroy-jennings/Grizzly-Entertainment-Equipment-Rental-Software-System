@@ -148,6 +148,16 @@ public class Client {
 		
 	}
 	
+	public boolean receiptReceived() {
+		boolean receipt = false;
+		try {
+			receipt=objIs.readBoolean();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return receipt;
+	}
+	
 	public boolean invoiceReceived() {
 		boolean inv = false;
 		try {
