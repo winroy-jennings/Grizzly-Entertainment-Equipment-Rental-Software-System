@@ -142,18 +142,22 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 							} else {
 								JOptionPane.showMessageDialog(this, "Error occured while processing receipt",
 										"Invoice Status", JOptionPane.ERROR_MESSAGE);
+										logger.error("Error occured while processing receipt");
 							}
 						} else {
 							JOptionPane.showMessageDialog(this, "Invalid equipment ID, try again", "Receipt Status",
 									JOptionPane.ERROR_MESSAGE);
+									logger.error("Invalid equipment ID, try again");
 						}
 					} else {
 						JOptionPane.showMessageDialog(this, "Invalid employee ID, try again", "Receipt Status",
 								JOptionPane.ERROR_MESSAGE);
+								logger.error("Invalid employee ID, try again");
 					}
 				} else {
 					JOptionPane.showMessageDialog(this, "Invalid customer ID, try again", "Reciept Status",
 							JOptionPane.ERROR_MESSAGE);
+							logger.error("Invalid customer ID, try again");
 				}
 
 			} else if (e.getSource() == clearBtn) {

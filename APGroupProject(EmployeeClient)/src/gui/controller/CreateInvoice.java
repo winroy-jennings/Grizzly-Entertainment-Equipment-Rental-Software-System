@@ -138,6 +138,7 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 										if (invoiceStatus) {
 											JOptionPane.showMessageDialog(this, "Invoice created successfully!",
 													"Invoice Status", JOptionPane.INFORMATION_MESSAGE);
+													
 										} else {
 											JOptionPane.showMessageDialog(this,
 													"Error occured while processing invoice", "Invoice Status",
