@@ -1,6 +1,5 @@
 //Author: Aneska Bryan //
 
-
 package gui.controller;
 
 import java.awt.GridBagConstraints;
@@ -17,7 +16,6 @@ import javax.swing.JTextField;
 
 import client.Client;
 
-
 public class CreateReceipt extends JInternalFrame implements ActionListener {
 	/**
 	 * 
@@ -28,17 +26,15 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 
 	private JLabel equipmentIdLbl;
 	private JTextField equipmentIdTFld;
-	
+
 	private JLabel employeeIdLbl;
 	private JTextField employeeIdTFld;
-	
 
 	private JLabel customerIdLbl;
 	private JTextField customerIdTFld;
 
 	private GridBagConstraints gbc;
 	private Client client;
-
 
 	public CreateReceipt() {
 		super("Create Receipt", true, true, true, true);
@@ -58,13 +54,11 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 		createBtn = new JButton("Create Receipt");
 		clearBtn = new JButton("Clear");
 
-
 		customerIdLbl = new JLabel("Customer ID: ");
 		customerIdTFld = new JTextField();
-		
+
 		employeeIdLbl = new JLabel("Employee ID: ");
 		employeeIdTFld = new JTextField();
-
 
 		equipmentIdLbl = new JLabel("Equipment ID: ");
 		equipmentIdTFld = new JTextField();
@@ -104,7 +98,6 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 		gbc.gridy = 2;
 		this.add(customerIdTFld, gbc);
 
-
 	}
 
 	public void addActionListeners() {
@@ -120,56 +113,53 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == createBtn) {
-			if (!equipmentIdTFld.getText().isEmpty() || !customerIdTFld.getText().isEmpty()||!employeeIdTFld.getText().isEmpty()){
+			if (!equipmentIdTFld.getText().isEmpty() || !customerIdTFld.getText().isEmpty()
+					|| !employeeIdTFld.getText().isEmpty()) {
 
-							client.sendAction("Validate Customer ID");
+				client.sendAction("Validate Customer ID");
+				client.sendCustomerID(Integer.parseInt(customerIdTFld.getText()));
+				boolean validateCustomerID = client.validateCustomerID();
+
+				if (validateCustomerID) {
+					client.sendAction("Validate Employee ID");
+					client.sendEmployeeID(Integer.parseInt(employeeIdTFld.getText()));
+					boolean validateEmployeeID = client.validateEmployeeID();
+
+					if (validateEmployeeID) {
+						client.sendAction("Validate Equipment ID");
+						client.sendEmployeeID(Integer.parseInt(equipmentIdTFld.getText()));
+						boolean validateEquipmentID = client.validateEquipmentID();
+
+						if (validateEquipmentID) {
+
+							client.sendAction("Add Receipt");
 							client.sendCustomerID(Integer.parseInt(customerIdTFld.getText()));
-							boolean validateCustomerID = client.validateCustomerID();
-							
-							if (validateCustomerID) {
-								client.sendAction("Validate Employee ID");
-								client.sendEmployeeID(Integer.parseInt(employeeIdTFld.getText()));
-								boolean validateEmployeeID = client.validateEmployeeID();
+							boolean receiptStatus = client.receiptReceived();
 
-
-								if (validateEmployeeID) {
-									client.sendAction("Validate Equipment ID");
-									client.sendEmployeeID(Integer.parseInt(equipmentIdTFld.getText()));
-									boolean validateEquipmentID = client.validateEquipmentID();
-
-
-									if (validateEquipmentID) {
-
-
-										client.sendAction("Add Receipt");
-										client.sendCustomerID(Integer.parseInt(customerIdTFld.getText()));
-										boolean receiptStatus = client.receiptReceived();
-
-										if (receiptStatus) {
-											JOptionPane.showMessageDialog(this, "Receipt created successfully!",
-													"Receipt Status", JOptionPane.INFORMATION_MESSAGE);
-										} else {
-											JOptionPane.showMessageDialog(this,
-													"Error occured while processing receipt", "Invoice Status",
-													JOptionPane.ERROR_MESSAGE);
-										}
-									} else {
-										JOptionPane.showMessageDialog(this, "Invalid equipment ID, try again",
-												"Receipt Status", JOptionPane.ERROR_MESSAGE);
-									}
-								} else {
-									JOptionPane.showMessageDialog(this, "Invalid employee ID, try again",
-											"Receipt Status", JOptionPane.ERROR_MESSAGE);
-								}
+							if (receiptStatus) {
+								JOptionPane.showMessageDialog(this, "Receipt created successfully!", "Receipt Status",
+										JOptionPane.INFORMATION_MESSAGE);
 							} else {
-								JOptionPane.showMessageDialog(this, "Invalid customer ID, try again", "Reciept Status",
-										JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(this, "Error occured while processing receipt",
+										"Invoice Status", JOptionPane.ERROR_MESSAGE);
 							}
+						} else {
+							JOptionPane.showMessageDialog(this, "Invalid equipment ID, try again", "Receipt Status",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Invalid employee ID, try again", "Receipt Status",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Invalid customer ID, try again", "Reciept Status",
+							JOptionPane.ERROR_MESSAGE);
+				}
 
-		} else if (e.getSource() == clearBtn) {
-			customerIdTFld.setText("");
-			equipmentIdTFld.setText("");
+			} else if (e.getSource() == clearBtn) {
+				customerIdTFld.setText("");
+				equipmentIdTFld.setText("");
+			}
 		}
 	}
-
 }
