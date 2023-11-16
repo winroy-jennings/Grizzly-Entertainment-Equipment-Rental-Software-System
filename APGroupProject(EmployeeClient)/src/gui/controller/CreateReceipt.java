@@ -162,6 +162,7 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 
 			} else if (e.getSource() == clearBtn) {
 				customerIdTFld.setText("");
+				employeeIdTFld.setText("");
 				equipmentIdTFld.setText("");
 			}
 		}
