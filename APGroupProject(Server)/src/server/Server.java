@@ -21,11 +21,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import gui.controller.CreateInvoice;
 import models.Customer;
 import models.Date;
 import models.Employee;
@@ -42,6 +48,8 @@ public class Server {
 	private static Connection dbConn = null;
 	private Statement stmt;
 	private ResultSet result = null;
+
+	private static final Logger logger = LogManager.getLogger(Server.class);
 
 	public Server() {
 		this.createConnection();
@@ -72,13 +80,11 @@ public class Server {
 						int customerId = (int) objIs.readObject();
 						searchForCustomer2(customerId);
 						objOs.writeObject(true);
-					}
-					if (action.equals("Add Message")) {
+					} else if (action.equals("Add Message")) {
 						messageObj = (Message) objIs.readObject();
 						addMessageToFile(messageObj);
 						objOs.writeObject(true);
-					}
-					if (action.equals("Add Employee")) {
+					} else if (action.equals("Add Employee")) {
 						employeeObj = (Employee) objIs.readObject();
 						addEmployeeToFile(employeeObj);
 						objOs.writeObject(true);
@@ -86,8 +92,7 @@ public class Server {
 						int employeeId = (int) objIs.readObject();
 						searchForEmployee(employeeId);
 						objOs.writeObject(true);
-					}
-					if (action.equals("Customer Login")) {
+					} else if (action.equals("Customer Login")) {
 						int customerId = (int) objIs.readObject();
 						String customerUsername = (String) objIs.readObject();
 						String customerPassword = (String) objIs.readObject();
@@ -106,7 +111,7 @@ public class Server {
 						try {
 							category = (String) objIs.readObject();
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 
@@ -132,7 +137,7 @@ public class Server {
 							isValid = validateEquipmentAvailablity(equipmentID);
 							objOs.writeObject(isValid);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Process Equipment")) {
@@ -146,7 +151,7 @@ public class Server {
 							isValid = rentedEquipmentAvailablity(equipmentID);
 							objOs.writeObject(isValid);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Retrieve Cost")) {
@@ -160,7 +165,7 @@ public class Server {
 							costRes = retrieveEquipmentCost(equipmentID);
 							objOs.writeObject(costRes);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Process Transaction")) {
@@ -172,7 +177,7 @@ public class Server {
 							res = processTransaction(trnsTemp);
 							objOs.writeObject(res);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					}
@@ -189,7 +194,7 @@ public class Server {
 							messageList = retrieveAllMessages(userID);
 							objOs.writeObject(messageList);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Validate Customer ID")) {
@@ -203,7 +208,7 @@ public class Server {
 							result = validateCustomerID(customerID);
 							objOs.writeObject(result);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Validate Employee ID")) {
@@ -217,7 +222,7 @@ public class Server {
 							result = validateEmployeeID(employeeID);
 							objOs.writeObject(result);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Validate Equipment ID")) {
@@ -231,7 +236,7 @@ public class Server {
 							result = validateEmployeeID(equipmentID);
 							objOs.writeObject(result);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					} else if (action.equalsIgnoreCase("Add Rental Request")) {
@@ -245,10 +250,30 @@ public class Server {
 							result = addSheduleEquipment(rentalRequest);
 							objOs.writeObject(result);
 						} catch (IOException | ClassNotFoundException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage());
 							break;
 						}
 					}
+
+					// Add Invoice
+					else if (action.equalsIgnoreCase("Add Invoice")) {
+						int customerID;
+						int equipmentID;
+						boolean result = false;
+
+						// True means successful and False means unsuccessful
+
+						try {
+							customerID = (int) objIs.readObject();
+							equipmentID = (int) objIs.readObject();
+							result = addInvoice(customerID, equipmentID);
+							objOs.writeObject(result);
+						} catch (IOException | ClassNotFoundException e) {
+							logger.error(e.getMessage());
+							break;
+						}
+					}
+
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
 				} catch (ClassCastException ex) {
@@ -423,7 +448,7 @@ public class Server {
 				employeeObj.setEmployeePosition(result.getString(5));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return employeeObj;
 	}
@@ -517,8 +542,10 @@ public class Server {
 
 				equipmentList.add(equipment);
 			}
+
+			logger.info("Retrieve list of available equipments from the database.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return equipmentList;
@@ -533,8 +560,9 @@ public class Server {
 		try {
 			Statement stat = dbConn.createStatement();
 			result = stat.execute(query);
+			logger.info("Validate available equipment.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return result;
@@ -549,8 +577,9 @@ public class Server {
 		try {
 			Statement stat = dbConn.createStatement();
 			result = stat.executeUpdate(query);
+			logger.info("An equipment was updated in the database.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		if (result == 1) {
@@ -569,8 +598,9 @@ public class Server {
 		try {
 			Statement stat = dbConn.createStatement();
 			result = stat.executeQuery(query);
+			logger.info("An equipment cost was retrieved from the database.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		try {
@@ -578,7 +608,7 @@ public class Server {
 				equipCost = result.getDouble("cost");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return equipCost;
@@ -605,7 +635,7 @@ public class Server {
 			Statement stat = dbConn.createStatement();
 			result = stat.executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		if (result == 1) {
@@ -631,9 +661,10 @@ public class Server {
 
 				Message message = new Message(id, customerId, employeeId, equipmentId, messageSrg);
 				messageList.add(message);
+				logger.info("Retrieve list of message from the database.");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return messageList;
@@ -648,7 +679,7 @@ public class Server {
 			Statement stat = dbConn.createStatement();
 			result = stat.execute(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return result;
@@ -663,7 +694,7 @@ public class Server {
 			Statement stat = dbConn.createStatement();
 			result = stat.execute(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return result;
@@ -678,7 +709,7 @@ public class Server {
 			Statement stat = dbConn.createStatement();
 			result = stat.execute(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		return result;
@@ -700,8 +731,54 @@ public class Server {
 		try {
 			Statement stat = dbConn.createStatement();
 			result = stat.executeUpdate(query);
+			logger.info("Shedule Equipment was added to the database.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		if (result == 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean addInvoice(int customerID, int equipmentID) {
+		int result = 0;
+		ResultSet resultSet;
+		double cost = 0;
+
+		String query = "SELECT cost FROM equipment WHERE id='" + equipmentID + "'";
+		Statement stat;
+
+		try {
+			stat = dbConn.createStatement();
+			resultSet = stat.executeQuery(query);
+
+			if (resultSet.next()) {
+				cost = resultSet.getDouble("cost");
+			}
+
+			// Get the current date
+			LocalDate currentDate = LocalDate.now();
+
+			// Define the desired date format
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+			// Format the current date
+			String formattedDate = currentDate.format(formatter);
+
+			query = "INSERT INTO invoice(customerID, equipmentID, equipmentCost, invoiceDate)" + "VALUES('" + customerID
+					+ "', '" + equipmentID + "', '" + cost + "', '" + formattedDate + "');";
+
+			try {
+				Statement stat2 = dbConn.createStatement();
+				result = stat2.executeUpdate(query);
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+			}
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
 		}
 
 		if (result == 1) {

@@ -37,7 +37,7 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 	private GridBagConstraints gbc;
 	private Client client;
 
-	private static final java.util.logging.Logger logger = LogManager.getLogger(CreateInvoice.class);
+	private static final Logger logger = LogManager.getLogger(CreateInvoice.class);
 
 	public CreateInvoice() {
 		super("Create Invoice", true, true, true, true);
@@ -133,6 +133,7 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 
 										client.sendAction("Add Invoice");
 										client.sendCustomerID(Integer.parseInt(customerIdTFld.getText()));
+										client.sendEmployeeID(Integer.parseInt(equipmentIdTFld.getText()));
 										boolean invoiceStatus = client.invoiceReceived();
 
 										if (invoiceStatus) {

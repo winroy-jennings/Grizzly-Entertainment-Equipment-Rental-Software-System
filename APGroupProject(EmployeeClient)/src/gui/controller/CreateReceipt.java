@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import client.Client;
 
 public class CreateReceipt extends JInternalFrame implements ActionListener {
@@ -35,6 +38,8 @@ public class CreateReceipt extends JInternalFrame implements ActionListener {
 
 	private GridBagConstraints gbc;
 	private Client client;
+	
+	private static final Logger logger = LogManager.getLogger(CreateInvoice.class);
 
 	public CreateReceipt() {
 		super("Create Receipt", true, true, true, true);
