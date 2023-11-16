@@ -15,6 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import approject.Transactions;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -41,10 +44,9 @@ public class ViewSingleTransaction {
 	private JScrollPane scrollPane;
 	JTextField transField = new JTextField();
 	
+	
+	
 	public ViewSingleTransaction() {
-		System.out.println("Display this message:");
-	}
-	/*public ViewSingleTransaction() {
 		frame.setResizable(false);
         frame.setBounds(700, 300, 700, 591);
         frame.getContentPane().setLayout(null);
@@ -62,6 +64,31 @@ public class ViewSingleTransaction {
         transField.setFont(new Font("Serif", Font.PLAIN, 14));
         transField.setBounds(170, 10, 130, 30);
         frame.getContentPane().add(transField);
+        
+        
+        JMenuBar transactionBar = new JMenuBar();
+        transactionBar.setBounds(10, 10, 100, 30);
+        transactionBar.setBackground(new Color(220,220,220));
+        transactionBar.setForeground(Color.BLUE);
+        frame.setSize(400, 300);
+        frame.getContentPane().add(transactionBar);
+        
+        JMenu transactionMenu = new JMenu("View");
+        transactionMenu.setBounds(10, 10, 100, 30);
+        transactionMenu.setBackground(new Color(220,220,220));
+        transactionMenu.setFont(new Font("Serif", Font.PLAIN, 14));
+        transactionMenu.setForeground(Color.BLUE);
+        frame.getContentPane().add(transactionMenu);
+        
+        
+        
+        JMenuItem menuItem = new JMenuItem("View Single Transaction");
+        menuItem.setBounds(0, 0, 0, 0);
+        menuItem.setBackground(new Color (220,220,220));
+        menuItem.setFont(new Font("Serif", Font.BOLD, 10));
+        frame.getContentPane().add(menuItem);
+        
+        
         
         JButton enterBtn = new JButton ("Enter");
         enterBtn.setFont(new Font("Serif", Font.BOLD, 14));
@@ -97,6 +124,7 @@ public class ViewSingleTransaction {
             }
         });
         frame.getContentPane().add(backBtn);
+        
         enterBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,7 +135,7 @@ public class ViewSingleTransaction {
                     Client client = new Client();                
                     client.sendAction("Find Transactions");
                     System.out.println("Message sent to server");
-                    client.sendTransactionsId(Integer.parseInt(TransactionId));
+                    client.sendTransactionId(Integer.parseInt(TransactionId));
                     System.out.println("Record sent to server");
                     client.receiveResponse();
                     System.out.println("Response received from server");
@@ -141,11 +169,46 @@ public class ViewSingleTransaction {
             scrollPane.setForeground(Color.lightGray);
             scrollPane.setBackground(Color.WHITE);
             scrollPane.setBounds(20, 80, 930, 350);
+          
             
-	}*/
+	}
+        public void ViewTable(Queue<Transaction> singleTransaction) 
+    	{	
+    		Object[]columns = {"id", "startDate", "endDate", "transactionCost"};
+    		JTable ViewTable = new JTable();
+    		DefaultTableModel mode = (DefaultTableModel) ViewTable.getModel();
+    		ViewTable.setFont(new Font("Serif", Font.PLAIN, 14));
+    		mode.setColumnIdentifiers(columns);
+    	
+    		for (Transaction transaction: singleTransaction) 
+    		{
+    			transField.setText(Integer.toString(transaction.getId()));
+                Object[] row = {transaction.getId(),transaction.getStartDate(),transaction.getEndDate(),transaction.getTransactionCost()};
+    			mode.addRow(row);
+            }
+
+    		ViewTable.setModel(mode);
+    		ViewTable.setBackground(Color.lightGray);
+    		ViewTable.setForeground(Color.GRAY);
+    		ViewTable.setSelectionBackground(Color.lightGray);
+    		ViewTable.setSelectionForeground(Color.white);
+    		ViewTable.setGridColor(Color.blue);
+    		ViewTable.setRowHeight(30);
+    		
+    		JScrollPane scroll = new JScrollPane(ViewTable);
+    		scroll.setForeground(Color.lightGray);
+    		scroll.setBackground(Color.WHITE);
+    		scroll.setBounds(20,80,930,350);
+
+    		frame.add(scroll);
+    		frame.setVisible(true);
+    	}
+
+    }
+        
     
 	
 	
 	
 	
-}
+

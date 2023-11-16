@@ -787,4 +787,52 @@ public class Server {
 
 		return false;
 	}
+	
+	// Aneska Bryan //
+	public boolean addReceipt(int customerID, int equipmentID, int employeeID) {
+		int result = 0;
+		ResultSet resultSet;
+		double cost = 0;
+
+		String query = "SELECT cost FROM equipment WHERE id='" + equipmentID + "'";
+		Statement stat;
+
+		try {
+			stat = dbConn.createStatement();
+			resultSet = stat.executeQuery(query);
+
+			if (resultSet.next()) {
+				cost = resultSet.getDouble("cost");
+			}
+
+			// Get the current date
+			LocalDate currentDate = LocalDate.now();
+
+			// Define the desired date format
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+			// Format the current date
+			String formattedDate = currentDate.format(formatter);
+
+			query = "INSERT INTO receipt(customerID, employeeID, equipmentID, equipmentCost, invoiceDate)" + "VALUES('" + customerID
+					+ "', '" + equipmentID + "', '" + employeeID +"','" + cost + "', '" + formattedDate + "');";
+
+			try {
+				Statement stat2 = dbConn.createStatement();
+				result = stat2.executeUpdate(query);
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+			}
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		if (result == 1) {
+			return true;
+		}
+
+		return false;
+	}
+
 }
+
