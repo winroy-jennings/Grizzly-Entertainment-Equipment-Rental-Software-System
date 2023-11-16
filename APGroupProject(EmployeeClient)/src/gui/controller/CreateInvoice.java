@@ -37,7 +37,7 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 	private GridBagConstraints gbc;
 	private Client client;
 
-	private static final Logger logger = LogManager.getLogger(CreateInvoice.class);
+	private static final java.util.logging.Logger logger = LogManager.getLogger(CreateInvoice.class);
 
 	public CreateInvoice() {
 		super("Create Invoice", true, true, true, true);
@@ -147,14 +147,17 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 									} else {
 										JOptionPane.showMessageDialog(this, "Invalid equipment ID, try again",
 												"Invoice Status", JOptionPane.ERROR_MESSAGE);
+												logger.error("Invalid equipment ID, try again");
 									}
 								} else {
 									JOptionPane.showMessageDialog(this, "Invalid employee ID, try again",
 											"Invoice Status", JOptionPane.ERROR_MESSAGE);
+											logger.error("Invalid employee ID, try again");
 								}
 							} else {
 								JOptionPane.showMessageDialog(this, "Invalid customer ID, try again", "Invoice Status",
 										JOptionPane.ERROR_MESSAGE);
+										logger.error("Invalid customer ID, try again", "Invoice Status");
 							}
 
 		} else if (e.getSource() == clearBtn) {
