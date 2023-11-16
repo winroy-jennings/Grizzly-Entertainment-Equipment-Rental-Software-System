@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import models.Customer;
 import models.Employee;
 import models.Equipment;
+import models.EquipmentInventory;
 import models.Message;
 import models.RentalRequest;
 import models.Transaction;
@@ -342,4 +343,14 @@ public class Client {
 
 		return result;
 	}
+	public List<EquipmentInventory> viewEquipmentInventoryResponse() {
+		List<EquipmentInventory> result = null;
+
+		try {
+			result = (List<EquipmentInventory>) objIs.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 }

@@ -2,12 +2,17 @@ package views;
 
 import views.Client;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -35,7 +40,7 @@ private JButton submitButton;
 private JButton previousButton;
 
 public JMenuBar optionsBar;
-public JMenu optionBar, subMenu;
+public JMenu serviceMen, subMenu;
 public JMenuItem menuItm;
 	Message message = new Message();
 	
@@ -115,8 +120,7 @@ public JMenuItem menuItm;
 		submitButton.setBounds(390, 370, 100, 30);
 		submitButton.addActionListener(new ActionListener()
 				{
-					@Override
-					public void actionPerformed(ActionEvent e)
+					public void actionPerformed1(ActionEvent e)
 					{
 						if(idText.getText().equals("")||informationText.getText().equals("")||dateText.getText().equals(""))
 						{
@@ -132,18 +136,144 @@ public JMenuItem menuItm;
 							message.setDate(dateText.getText());
 							
 							
+							client.sendAction("Add feedback");
+							client.sendMessages(message);//client class 
+							
 						}
 					}
-				}
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+		frame.getContentPane().add(submitButton);
+		
+		previousButton = new JButton ("Previous");
+		previousButton.setFont(new Font("Serif", Font.BOLD, 18));
+		previousButton.setForeground(Color.white);
+		previousButton.setBackground(new Color(96, 96, 96));
+		previousButton.setBounds(90, 370, 100, 30);
+		previousButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				new CustomerDashboard();//from briana 
+				frame.dispose();
+			}
+		});
+		
+		frame.getContentPane().add(previousButton);
 		
 		
+		//CREATE THE MENU BAR
 		
+		optionsBar = new JMenuBar();
+		serviceMen = new JMenu("Service:");
+		serviceMen.setFont(new Font("Serif",Font.BOLD, 14));
+		serviceMen.setMnemonic(KeyEvent.VK_A);
+		serviceMen.getAccessibleContext().setAccessibleDescription(null);
+		serviceMen.setBounds(250, 70, 50, 15);
+		serviceMen.setOpaque(true);
+		optionsBar.add(serviceMen);
 		
+		//MENU ITEM 
 		
+		menuItm = new JMenuItem("View customer complaint",KeyEvent.VK_T);
+		menuItm.setFont(new Font("Serif",Font.BOLD, 14));
+		menuItm.setBackground(new Color(255, 255, 255));
+		menuItm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		menuItm.getAccessibleContext().setAccessibleDescription("Complaint");
+		menuItm.addActionListener(new ActionListener()
+				{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}	
+			});
+		serviceMen.add(menuItm);
 		
+		menuItm = new JMenuItem("Query Account Status",KeyEvent.VK_T);
+		menuItm.setFont(new Font("Serif",Font.BOLD, 14));
+		menuItm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+		menuItm.getAccessibleContext().setAccessibleDescription("Complaint");
+		menuItm.setBackground(new Color(255, 255, 255));
+		menuItm.addActionListener(new ActionListener() {
+			@Override
+			
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.dispose();
+			}
+				});
 		
+		serviceMen.add(menuItm);
 		
+		menuItm = new JMenuItem("View Past Paymnets", KeyEvent.VK_T);
+		menuItm.setFont(new Font("Serif", Font.BOLD, 14));
+		menuItm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, ActionEvent.ALT_MASK));
+		menuItm.getAccessibleContext().setAccessibleDescription("Complaint");
+		menuItm.setBackground(new Color(255, 255, 255));
+		menuItm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.dispose();
+		}
+		});
+		
+		serviceMen.add(menuItm);
+		
+		serviceMen = new JMenu("Previous");
+		serviceMen.setFont(new Font("Serif", Font.BOLD, 14));
+		serviceMen.setMnemonic(KeyEvent.VK_A);
+		serviceMen.getAccessibleContext().setAccessibleDescription("");
+		serviceMen.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				frame.dispose();
+				new CustomerDashboard();//from briana 
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//TODOD Auto-Generated method sub
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				//TODOD Auto-Generated method sub
+			}
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				//TODOD Auto-Generated method sub
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		optionsBar.add(serviceMen);
+		
+		class MenuListener
+		{
+			MenuListener listener = new MenuListener();
+		}
+		
+		frame.add(optionsBar);
+		frame.setJMenuBar(optionsBar);
+		frame.setVisible(true);
 	}
-
-
+	public static void main(String args [])
+	{
+		new CustomerFeedback();
+	}
 }
