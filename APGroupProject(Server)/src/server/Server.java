@@ -307,7 +307,7 @@ public class Server {
 
 	public List<EquipmentInventory> retrieveAllAvailableEquipmentIneventory() {
 		List<EquipmentInventory> equipmentList = new ArrayList<>();
-		String query = "SELECT id, category, equipmentType,COUNT(equipmentType) FROM EquipmentInventory "+ "'"; 
+		String query = "SELECT id, category, equipmentType, COUNT(equipmentType) AS equipmentQuantity FROM EquipmentInventory";
 		
 
 		try (Statement stat = dbConn.createStatement(); ResultSet result = stat.executeQuery(query)) {

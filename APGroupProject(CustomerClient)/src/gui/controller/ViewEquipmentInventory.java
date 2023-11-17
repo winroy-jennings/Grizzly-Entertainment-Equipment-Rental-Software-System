@@ -129,8 +129,6 @@ public class ViewEquipmentInventory extends JInternalFrame implements ActionList
 		// Clear existing data
 		equipmentTableModel.setRowCount(0);
 
-		String rentalStatus = "";
-
 		for (EquipmentInventory equipmentInventory : equipmentList) {
 			equipmentTableModel.addRow(new String[] { String.valueOf(equipmentInventory.getId()), equipmentInventory.getCategory(),
 					equipmentInventory.getEquipmentType(), String.valueOf(equipmentInventory.getEquipmentQuantity())});
