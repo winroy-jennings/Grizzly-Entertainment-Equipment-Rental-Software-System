@@ -289,12 +289,33 @@ public class Server {
 							break;
 						}
 					}
+					// Add Receipt
+					else if (action.equalsIgnoreCase("Add Receipt")) {
+						int customerID;
+						int equipmentID;
+						int employeeID;
+						boolean result = false;
+
+						// True means successful and False means unsuccessful
+
+						try {
+							customerID = (int) objIs.readObject();
+							equipmentID = (int) objIs.readObject();
+							employeeID = (int) objIs.readObject();
+							result = addReceipt(customerID, equipmentID, employeeID);
+							objOs.writeObject(result);
+						} catch (IOException | ClassNotFoundException e) {
+							logger.error(e.getMessage());
+							break;
+						}
+					}
 
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
 				} catch (ClassCastException ex) {
 					ex.printStackTrace();
 				}
+				
 				this.closeConnection();
 			}
 		} catch (EOFException ex) {
@@ -304,6 +325,7 @@ public class Server {
 			ex.printStackTrace();
 		}
 	}
+		
 
 	public List<EquipmentInventory> retrieveAllAvailableEquipmentIneventory() {
 		List<EquipmentInventory> equipmentList = new ArrayList<>();
@@ -496,7 +518,7 @@ public class Server {
 	}
 
 	private void customerLogin(int customerId, String customerUsername, String customerPassword) {
-		String sql = "SELECT * FROM grizzlyentertainment.customer WHERE customerId = ? AND username = ? AND password = ?";
+		String sql = "SELECT * FROM grizzlyentertainment.customer WHERE id = ? AND username = ? AND password = ?";
 		try {
 			PreparedStatement stmt = dbConn.prepareStatement(sql);
 			stmt.setInt(1, customerId);

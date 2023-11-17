@@ -167,5 +167,9 @@ public class CreateInvoice extends JInternalFrame implements ActionListener {
 			equipmentIdTFld.setText("");
 		}
 	}
+	
+	public static void main (String []args) {
+		new CreateInvoice();
+	}
 
 }

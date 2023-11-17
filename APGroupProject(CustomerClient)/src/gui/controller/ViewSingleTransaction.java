@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import approject.Transactions;
+import models.Transaction;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -203,6 +203,10 @@ public class ViewSingleTransaction {
     		frame.add(scroll);
     		frame.setVisible(true);
     	}
+        
+        public static void main(String []args) {
+        	new ViewSingleTransaction();
+        }
 
     }
         
