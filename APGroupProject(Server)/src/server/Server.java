@@ -36,6 +36,7 @@ import models.Customer;
 import models.Date;
 import models.Employee;
 import models.Equipment;
+import models.EquipmentInventory;
 import models.Message;
 import models.RentalRequest;
 import models.Transaction;
@@ -103,6 +104,21 @@ public class Server {
 						String employeePassword = (String) objIs.readObject();
 						employeeLogin(employeeId, employeeUsername, employeePassword);
 					}
+					else if (action.equalsIgnoreCase("View Equipment Inventory")) {
+					
+						List<EquipmentInventory> tmp = retrieveAllAvailableEquipmentInventory();
+
+						if (tmp != null) {
+							if (!connectionSocket.isClosed()) {
+								objOs.writeObject(tmp);
+							}
+						} else {
+							if (!connectionSocket.isClosed()) {
+								objOs.writeObject(false);
+							}
+						}
+					} 
+					
 
 					// Winroy Jennings
 					else if (action.equalsIgnoreCase("View Available Equipments")) {
@@ -287,6 +303,32 @@ public class Server {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public List<EquipmentInventory> retrieveAllAvailableEquipmentIneventory() {
+		List<EquipmentInventory> equipmentList = new ArrayList<>();
+		String query = "SELECT id, category, equipmentType,COUNT(equipmentType) FROM EquipmentInventory "+ "'"; 
+		
+
+		try (Statement stat = dbConn.createStatement(); ResultSet result = stat.executeQuery(query)) {
+			while (result.next()) {
+				int id = result.getInt("id");
+				String category = result.getString("category");
+ 
+				String equipmentType = result.getString("equipmentType");
+				int equipmentQuantity = result.getInt("equipmentType");
+
+				EquipmentInventory equipmentInventory = new EquipmentInventory(category,id, equipmentType,equipmentQuantity);
+
+				equipmentList.add(equipmentInventory);
+			}
+
+			logger.info("Retrieve list of equipment inventory.");
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return equipmentList;
 	}
 
 	private void createConnection() {
