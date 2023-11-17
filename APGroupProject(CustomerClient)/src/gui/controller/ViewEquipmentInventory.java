@@ -2,7 +2,6 @@
 
 package gui.controller;
 
-import models.Equipment;
 import models.EquipmentInventory;
 
 import java.awt.GridBagConstraints;
@@ -20,11 +19,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import client.Client;
-import models.Equipment;
-import client.Client;
 public class ViewEquipmentInventory extends JInternalFrame implements ActionListener {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Declare the components
 	private JTable equipmentTable;
 	private JScrollPane tableScrollPane;
@@ -145,5 +146,9 @@ public class ViewEquipmentInventory extends JInternalFrame implements ActionList
 
 			updateEquipmentTable(equipmentList);
 		}
-	}
+	
 
+public static void main (String [] args) {
+	new ViewEquipmentInventory (); 
+}
+}
